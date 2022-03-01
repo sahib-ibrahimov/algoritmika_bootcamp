@@ -1,3 +1,4 @@
+
 git clone <repository link>   # git-e qosulmaq
 git remote -v                 # git ile elaqeni yoxlamaq
 
