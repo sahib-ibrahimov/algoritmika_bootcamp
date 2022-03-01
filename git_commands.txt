@@ -8,3 +8,5 @@ git push                      # git repozitoriya elave etmek
 
 git init                      # git-e qosulmani berpa etmek
 git pull                      # git repozitoriyinden son versiyani yuklemek
+
+test branch
