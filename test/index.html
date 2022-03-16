@@ -49,7 +49,15 @@
       default: print('Mehsul bazada tapilmadi!', F_ERROR);
     }
     
-    if(confirm('Yekun mebleg: ' + summ + ' manat\nTesdiq?'))
+    const SALE = 10;
+    let endirim = '';
+    if (summ >= 5) {
+      let en = summ * SALE / 100;
+      summ -= en;
+      endirim = `Sizin endiriminiz ${en} manatdir\n`;
+    }
+    
+    if (confirm('Yekun mebleg: ' + summ + ' manat\n' + endirim + 'Tesdiq?'))
       print('Xeyirli olsun!', F_WARN);
     else print('Imtina etdiniz!', F_ERROR);
     
