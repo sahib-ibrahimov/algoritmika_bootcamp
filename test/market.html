@@ -3,21 +3,10 @@
 <head>
   <title>JavaScript</title>
   <link rel="stylesheet" href="main.css" />
+  <script src="main.js"></script>
 </head>
 <body>
   <script>
-    
-    const F_LOG = 0;
-    const F_WARN = 1;
-    const F_ERROR = 2;
-    
-    function print(msg, stat=F_LOG) {
-      switch (stat) {
-        case F_LOG: console.log(msg);   break;
-        case F_WARN: console.warn(msg);  break;
-        default: console.error(msg);
-      }
-    }
     
     let alma = 2;
     let armud = 3.5;
@@ -31,27 +20,41 @@
                   `789\tuzum\t${uzum}m`;
     print(menu);
     
-    let mehsul1 = parseInt(prompt('Mehsulun kodunu daxil edin:'));
-    let mehsul2 = parseInt(prompt('Mehsulun kodunu daxil edin:'));
-    
     let summ = 0;
-    switch (mehsul1) {
-      case 123: summ += alma;   break;
-      case 456: summ += armud;  break;
-      case 789: summ += uzum;   break;
-      default: print('Mehsul bazada tapilmadi!', F_ERROR);
-    }
+    do {
+      let mehsul = parseInt(prompt('Mehsulun kodunu daxil edin:'));
+      if (!mehsul) break;
+      switch (mehsul) {
+        case 123:
+          print('alma sebete elave edildi');
+          summ += alma;
+          break;
+        case 456:
+          print('armud sebete elave edildi');
+          summ += armud;
+          break;
+        case 789:
+          print('uzum sebete elave edildi');
+          summ += uzum;
+          break;
+        default: print('Mehsul bazada tapilmadi!', ERROR);
+      }
+      print('Sebetde: ' + summ + ' manat', WARN);
+    } while(true);
     
-    switch (mehsul2) {
-      case 123: summ += alma;   break;
-      case 456: summ += armud;  break;
-      case 789: summ += uzum;   break;
-      default: print('Mehsul bazada tapilmadi!', F_ERROR);
+    const SALE = 10;
+    let endirim = '';
+    let en = 0;
+    if (summ >= 5) {
+      en = summ * SALE / 100;
+      endirim = `Sizin endiriminiz ${en} manatdir\n`;
     }
-    
-    if(confirm('Yekun mebleg: ' + summ + ' manat\nTesdiq?'))
-      print('Xeyirli olsun!', F_WARN);
-    else print('Imtina etdiniz!', F_ERROR);
+
+    if (confirm('Yekun mebleg: ' + summ + ' manat\n' + 
+                endirim + 'Odenilecek mebleg : '+ (summ - en) + ' manat\n' +
+                'Tesdiq?'))
+      print('Xeyirli olsun!', WARN);
+    else print('Imtina etdiniz!', ERROR);
     
   </script>
 </body>

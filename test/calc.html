@@ -3,21 +3,10 @@
 <head>
   <title>JavaScript</title>
   <link rel="stylesheet" href="main.css" />
+  <script src="main.js"></script>
 </head>
 <body>
   <script>
-    
-    function print(msg, stat=0) {
-      switch (stat) {
-        case 0: console.log(msg);   break;
-        case 1: console.warn(msg);  break;
-        default: console.error(msg);
-      }
-    }
-    
-    function getRandomInt(n) {
-      return Math.trunc(Math.random() * n) +1;
-    }
     
     function getRandomOperator() {
       switch (getRandomInt(4)) {
@@ -30,22 +19,31 @@
     
     let a = getRandomInt(9);
     let b = getRandomInt(9);
-    let c = getRandomOperator();
+    let c = '/';getRandomOperator();
     
     let res = 0;
+    
     switch (c) {
       case '+': res = a + b; break;
       case '-': res = a - b; break;
       case '*': res = a * b; break;
       case '/': res = a / b; break;
     }
-    //print(res,1);
+    print(res,1);
     
     let tmpl = `${a} ${c} ${b} = `;
     
-    let ans = parseFloat(prompt(tmpl + '?'));
-    if (ans == res) alert('Aferin!')
-    else alert('Cavab sehvdi!\n' + tmpl + res);
+    let ans = 0;
+    
+    do {
+      ans = parseFloat(prompt(tmpl + '?'));
+      if (ans == res) {
+        alert('Aferin!');
+        break;
+      } else {
+        if (!confirm('Cavab sehvdi! Yeniden cehd etmek isteyirsiz?\n')) break;
+      }
+    } while (true);
     
   </script>
 </body>
