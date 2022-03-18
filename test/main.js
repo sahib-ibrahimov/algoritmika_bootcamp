@@ -10,6 +10,17 @@ function print(msg, stat=LOG) {
   }
 }
 
+function printArray(arr) {
+  let s = '';
+  for(let i=0; i<arr.length; ++i) s+= arr[i] + ' ';
+  print(s);
+}
+
+function intArray(arr){
+  for(let i=0; i<arr.length; ++i)
+    arr[i] = parseInt(arr[i]);
+}
+
 function getRandomInt(n) {
   return Math.trunc(Math.random() * n) +1;
 }
