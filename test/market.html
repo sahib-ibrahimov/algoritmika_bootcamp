@@ -8,38 +8,28 @@
 <body>
   <script>
     
-    let alma = 2;
-    let armud = 3.5;
-    let uzum = 5;
+    let mehsulAd = ['alma', 'armud', 'uzum', 'banan', 'nar'];
+    let mehsulQiymet = [2, 3.5, 5, 4, 1.5];
     
-    const menu = 'Magazamiza xos gelmissiniz!\n' +
+    let menu = 'Magazamiza xos gelmissiniz!\n' +
                   'Mehsullarimiz:\n' +
-                  'kod\tadi\tqiymeti\n' +
-                  `123\talma\t${alma}m\n` +
-                  `456\tarmud\t${armud}m\n` +
-                  `789\tuzum\t${uzum}m`;
+                  'kod\tadi\tqiymeti\n';
+    for(let i=0; i<mehsulAd.length; ++i)
+      menu += `${i}\t${mehsulAd[i]}\t${mehsulQiymet[i]}\n`;
     print(menu);
     
     let summ = 0;
     do {
-      let mehsul = parseInt(prompt('Mehsulun kodunu daxil edin:'));
-      if (!mehsul) break;
-      switch (mehsul) {
-        case 123:
-          print('alma sebete elave edildi');
-          summ += alma;
-          break;
-        case 456:
-          print('armud sebete elave edildi');
-          summ += armud;
-          break;
-        case 789:
-          print('uzum sebete elave edildi');
-          summ += uzum;
-          break;
-        default: print('Mehsul bazada tapilmadi!', ERROR);
+      let mehsul = prompt('Mehsulun kodunu daxil edin:');
+      if (mehsul === '') break;
+      mehsul = parseInt(mehsul);
+      if (mehsul < mehsulAd.length) {
+        print(`${mehsulAd[mehsul]} sebete elave edildi`);
+        summ += mehsulQiymet[mehsul];
+        print('Sebetde: ' + summ + ' manat', WARN);
+      } else {
+        print('Mehsul bazada tapilmadi!', ERROR);
       }
-      print('Sebetde: ' + summ + ' manat', WARN);
     } while(true);
     
     const SALE = 10;
@@ -49,7 +39,7 @@
       en = summ * SALE / 100;
       endirim = `Sizin endiriminiz ${en} manatdir\n`;
     }
-
+    
     if (confirm('Yekun mebleg: ' + summ + ' manat\n' + 
                 endirim + 'Odenilecek mebleg : '+ (summ - en) + ' manat\n' +
                 'Tesdiq?'))

@@ -8,40 +8,7 @@
 <body>
   <script>
     
-    function minArray(arr) {
-      let min = arr[0];
-      for(let i=1; i<arr.length; ++i)
-        if((arr[i]) && (arr[i] < min)) min = arr[i];
-      return min;
-    }
     
-    function maxArray(arr) {
-      let max = arr[0];
-      for(let i=1; i<arr.length; ++i)
-        if((arr[i]) && (arr[i] > max)) max = arr[i];
-      return max;
-    }
-    
-    let arr = prompt().split(' ');
-    intArray(arr);
-    
-    if (arr.length) {
-      let min = minArray(arr);
-      let max = maxArray(arr);
-      
-      let summ = 0, c = 0;
-      for(let i=0; i<arr.length; ++i) {
-        if (arr[i]) {
-          summ+=arr[i];
-          ++c;
-        }
-      }
-      
-      print(`max: ${max}`,WARN);
-      print(`min: ${min}`,WARN);
-      if(c) print(summ / c);
-      else print(-1);
-    }
     
   </script>
 </body>
