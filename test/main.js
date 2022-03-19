@@ -24,3 +24,27 @@ function intArray(arr){
 function getRandomInt(n) {
   return Math.trunc(Math.random() * n) +1;
 }
+
+function isDigit(c) {
+  switch(c) {
+    case '0': case '1': case '2':
+    case '3': case '4': case '5':
+    case '6': case '7': case '8':
+    case '9': return true;
+    default: return false;
+  }
+}
+
+function isFloat(n){ 
+  return Number(n) == n && Number(n) % 1 !== 0; 
+}
+
+function isNumber(str) {
+  let p = 0;
+  for(let i=0; i<str.length; ++i) {
+    if (str[i] == '.') ++p;
+    else if (! isDigit(str[i]) ) return false;
+    if (p > 1) return false;
+  }
+  return Boolean(str.length);
+}

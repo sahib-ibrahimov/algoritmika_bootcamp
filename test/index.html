@@ -8,7 +8,31 @@
 <body>
   <script>
     
+    function numberToText(n) {
+      const onluq = ['', 'on', 'iyirmi', 'otuz', 'qirx', 'elli', 
+                     'altmis', 'yetmis', 'seksen', 'doxsan'];
+      const vahid = ['', 'bir', 'iki', 'uc', 'dord', 'bes', 
+                     'alti', 'yeddi', 'sekkiz', 'doqquz'];
+      
+      let s = '';
+      let c = 1;
+      while (n) {
+        let k = n % 10;
+        n = Math.trunc(n / 10);
+        switch (c) {
+          case 1: s = vahid[k] + ' ' + s; break;
+          case 2: s = onluq[k] + ' ' + s; break;
+          case 3: s = ( (k == 1) ? '' : vahid[k] ) 
+                    + ( ((k > 1) && n)  ? 'yuz ' : '') + s; break;
+          case 4: s = ( (k == 1) ? '' : vahid[k] ) + 'min ' + s; break;
+        }
+        ++c;
+      }
+      
+      return  s;
+    }
     
+    print( numberToText( parseInt( prompt() ) ) );
     
   </script>
 </body>
