@@ -22,9 +22,9 @@
         switch (c) {
           case 1: s = vahid[k] + ' ' + s; break;
           case 2: s = onluq[k] + ' ' + s; break;
-          case 3: s = ( (k == 1) ? '' : vahid[k] ) 
-                    + ( ((k > 1) && n)  ? 'yuz ' : '') + s; break;
-          case 4: s = ( (k == 1) ? '' : vahid[k] ) + 'min ' + s; break;
+          case 3: s = ( (k == 1) ? '' : vahid[k] + ' ' ) 
+                    + ( ( (!n) || (n && k) )  ? 'yuz ' : '') + s; break;
+          case 4: s = ( (k == 1) ? '' : vahid[k] + ' ' ) + 'min ' + s; break;
         }
         ++c;
       }
