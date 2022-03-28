@@ -1,6 +1,4 @@
-const LOG = 0;
-const WARN = 1;
-const ERROR = 2;
+const [LOG, WARN, ERROR] = [0, 1, 2];
 
 function print(msg, stat=LOG) {
   switch (stat) {
@@ -11,9 +9,7 @@ function print(msg, stat=LOG) {
 }
 
 function printArray(arr) {
-  let s = '';
-  for(let i=0; i<arr.length; ++i) s+= arr[i] + ' ';
-  print(s);
+  print(arr.join(' '));
 }
 
 function intArray(arr){

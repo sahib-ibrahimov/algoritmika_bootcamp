@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript</title>
+  <link rel="stylesheet" href="main.css" />
+  <script src="main.js"></script>
+</head>
+<body>
+  <script>
+    
+    let arr = [];
+    for(let i=1; i<10; ++i) {
+      let arr2 = [];
+      for(let j=1; j<10; ++j)
+        arr2.push(i*j);
+      arr.push(arr2);
+    }
+    
+    let t1 = '\t';
+    let t2 = '--------';
+    for(let j=0; j<arr[0].length; ++j) {
+      t1 += (j+1) + '\t';
+      t2 += '--------';
+    }
+    print(t1);
+    print(t2);
+    
+    for(let i=0; i<arr.length; ++i) {
+      let s = (i+1) + '|\t';
+      for(let j=0; j<arr[i].length; ++j)
+        s += arr[i][j] + '\t';
+      print(s);
+    }
+    
+  </script>
+</body>
+</html>
