@@ -8,44 +8,60 @@
 <body>
   <script>
     
-    let mehsulAd = ['alma', 'armud', 'uzum', 'banan', 'nar'];
-    let mehsulQiymet = [2, 3.5, 5, 4, 1.5];
+    const [NAME, COST] = [0, 1];
+    let mehsullar = [];
     
-    let menu = 'Magazamiza xos gelmissiniz!\n' +
-                  'Mehsullarimiz:\n' +
-                  'kod\tadi\tqiymeti\n';
-    for(let i=0; i<mehsulAd.length; ++i)
-      menu += `${i}\t${mehsulAd[i]}\t${mehsulQiymet[i]}\n`;
-    print(menu);
-    
-    let summ = 0;
-    do {
-      let mehsul = prompt('Mehsulun kodunu daxil edin:');
-      if (mehsul === '') break;
-      mehsul = parseInt(mehsul);
-      if (mehsul < mehsulAd.length) {
-        print(`${mehsulAd[mehsul]} sebete elave edildi`);
-        summ += mehsulQiymet[mehsul];
-        print('Sebetde: ' + summ + ' manat', WARN);
+    while(true) {
+      let user = prompt('istifadeci adini daxil edin:');
+      if(user == 'exit') break;
+      if(user == 'admin') {
+        while(true) {
+          let s = prompt('mehsulun adini ve qiymetini daxil edin:');
+          if(s == '') break;
+          s = s.split(' ');
+          if(s.length != 2) continue;
+          s[1] = parseFloat(s[1]);
+          mehsullar.push(s);
+        }
       } else {
-        print('Mehsul bazada tapilmadi!', ERROR);
+        
+        let menu = 'Magazamiza xos gelmissiniz!\n' +
+                      'Mehsullarimiz:\n' +
+                      'kod\tadi\tqiymeti\n';
+        for(let i=0; i<mehsullar.length; ++i)
+          menu += `${i}\t${mehsullar[i][NAME]}\t${mehsullar[i][COST]}\n`;
+        print(menu);
+        
+        let summ = 0;
+        while(true) {
+          let mehsul = prompt('Mehsulun kodunu daxil edin:');
+          if (mehsul === '') break;
+          mehsul = parseInt(mehsul);
+          
+          if (mehsul < mehsullar.length) {
+            print(`${mehsullar[mehsul][NAME]} sebete elave edildi`);
+            summ += mehsullar[mehsul][COST];
+            print('Sebetde: ' + summ + ' manat', WARN);
+          } else {
+            print('Mehsul bazada tapilmadi!', ERROR);
+          }
+        }
+        
+        const SALE = 10;
+        let endirim = '';
+        let en = 0;
+        if (summ >= 5) {
+          en = summ * SALE / 100;
+          endirim = `Sizin endiriminiz ${en} manatdir\n`;
+        }
+        
+        if (confirm('Yekun mebleg: ' + summ + ' manat\n' + 
+                    endirim + 'Odenilecek mebleg : '+ (summ - en) + ' manat\n' +
+                    'Tesdiq?'))
+          print(`${user}, Xeyirli olsun!`, WARN);
+        else print('Imtina etdiniz!', ERROR);
       }
-    } while(true);
-    
-    const SALE = 10;
-    let endirim = '';
-    let en = 0;
-    if (summ >= 5) {
-      en = summ * SALE / 100;
-      endirim = `Sizin endiriminiz ${en} manatdir\n`;
     }
-    
-    if (confirm('Yekun mebleg: ' + summ + ' manat\n' + 
-                endirim + 'Odenilecek mebleg : '+ (summ - en) + ' manat\n' +
-                'Tesdiq?'))
-      print('Xeyirli olsun!', WARN);
-    else print('Imtina etdiniz!', ERROR);
-    
   </script>
 </body>
 </html>

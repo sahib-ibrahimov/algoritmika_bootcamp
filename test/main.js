@@ -1,23 +1,39 @@
 const [LOG, WARN, ERROR] = [0, 1, 2];
 
-function print(msg, stat=LOG) {
+function print(obj, stat=LOG) {
   switch (stat) {
-    case LOG: console.log(msg);   break;
-    case WARN: console.warn(msg);  break;
-    default: console.error(msg);
+    case LOG:
+      (Array.isArray(obj))
+      ? console.log(obj.toString())
+      : console.log(obj);
+      break;
+    case WARN:
+      (Array.isArray(obj))
+      ? console.warn(obj.toString())
+      : console.warn(obj);
+      break;
+    default:
+      (Array.isArray(obj))
+      ? console.error(obj.toString())
+      : console.error(obj);
   }
 }
 
-function printArray(arr) {
-  print(arr.join(' '));
+function debug(obj) { print(obj,WARN); }
+
+function printMatris(arr, stat=LOG) {
+  let s = [];
+  arr.forEach((item) => {
+    s.push(item.toString());
+  });
+  print(s.join('\n'), stat);
 }
 
 function intArray(arr){
-  for(let i=0; i<arr.length; ++i)
-    arr[i] = parseInt(arr[i]);
+  arr.forEach((_,i) => {arr[i] = parseInt(arr[i]);});
 }
 
-function getRandomInt(n) {
+function getRandomInt(n=100) {
   return Math.trunc(Math.random() * n) +1;
 }
 

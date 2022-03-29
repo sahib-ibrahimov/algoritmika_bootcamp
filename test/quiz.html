@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript</title>
+  <link rel="stylesheet" href="main.css" />
+  <script src="main.js"></script>
+</head>
+<body>
+  <script>
+    
+    const questions = new Array();
+    const answers = new Array();
+    
+    while(true) {
+      const user = prompt('istifadeci adini daxil edin:');
+      if(user == 'exit') break;
+      if(user == 'admin') {
+        while(true) {
+          let s = prompt('suali daxil edin:');
+          if(s == '') break;
+          let q = prompt('cavablari daxil edin:').split(',');
+          let x = parseInt(prompt('duzgun cavab:'));
+          q.unshift(x);
+          questions.push(s);
+          answers.push(q);
+        }
+      } else {
+        let points = 0;
+        for(let i=0; i<questions.length; ++i) {
+          function getAnswers(i) {
+            let s = '';
+            for(let j=1; j<answers[i].length; ++j)
+              s += j + '.' + answers[i][j] + ';\t';
+            return s;
+          }
+          let x = parseInt(prompt(questions[i]+'\n'+getAnswers(i)));
+          if(x == answers[i][0]) ++points;
+        }
+        alert(user+' total:\n'+points+'/'+questions.length);
+      }
+    }
+    
+  </script>
+</body>
+</html>
