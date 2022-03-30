@@ -1,0 +1,28 @@
+str.split(str2);
+str.charAt();
+
+arr.push(obj);
+x = arr.pop();
+arr.unshift(obj);
+x = arr.shift();
+
+x = arr.slice(from, to);
+arr.reverse();
+x = arr.concat(arr2);
+
+arr.indexOf(obj);
+arr.lastIndexOf(obj);
+
+arr.join(str);
+arr.toString();
+
+arr.forEach(func());
+x = arr.map(func());
+arr.find(func());
+x = arr.filter(func());
+
+arr.every(func());
+arr.some(func());
+
+arr.sort(func());
+arr.reduce(func());

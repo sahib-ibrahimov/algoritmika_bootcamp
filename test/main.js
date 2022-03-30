@@ -37,6 +37,15 @@ function getRandomInt(n=100) {
   return Math.trunc(Math.random() * n) +1;
 }
 
+function shuffle(arr) {
+  for(let i=0; i<arr.length; ++i) {
+    let x = getRandomInt(arr.length)-1;
+    let temp = arr[i];
+    arr[i] = arr[x];
+    arr[x] = temp;
+  }
+}
+
 function isDigit(c) {
   switch(c) {
     case '0': case '1': case '2':

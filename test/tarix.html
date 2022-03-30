@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript</title>
+  <link rel="stylesheet" href="main.css" />
+  <script src="main.js"></script>
+</head>
+<body>
+  <script>
+    
+    const [MIN_IL, CARI_IL] = [1990, 2022];
+    const [GUN, AY, IL] = [0, 1, 2];
+    const [EDED, QISA, TAM] = [0, 1, 2];
+    
+    function leapYear(year) {
+      if(year % 4) return false;
+      if(!(year % 100))
+        if(!(year % 400)) return true;
+        else return false;
+      return true;
+    }
+    
+    function printDate(date, type=EDED, sep='.') {
+      const months = ['', 'Yanvar', 'Fevral', 'Mart', 'Aprel',
+                      'May', 'Iyun', 'Iyul', 'Avqust',
+                      'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr'];
+      switch(type) {
+        case 0:
+          let g = (date[GUN] > 9) ? date[GUN] : '0'+date[GUN];
+          let a = (date[AY] > 9) ? date[AY] : '0'+date[AY];
+          print(`${g}${sep}${a}${sep}${date[IL]}`);
+          break;
+        case 1:
+          print(`${date[GUN]} ${months[date[AY]].substr(0,3)} ${date[IL]}`);
+          break;
+        case 2:
+          print(`${date[GUN]} ${months[date[AY]]} ${date[IL]}`);
+          break;
+      }
+    }
+    
+    function printDates(arr, type=EDED, sep='.') {
+      arr.forEach((item) => printDate(item, type, sep));
+    }
+    
+    const tarix = new Array();
+    for(let i=0; i<5; ++i) {
+      let arr = new Array();
+      arr[IL] = MIN_IL + getRandomInt(CARI_IL - MIN_IL - 1) + 1;
+      arr[AY] = getRandomInt(12);
+      switch(arr[AY]) {
+        case 2:
+          if(leapYear(arr[IL])) arr[GUN] = getRandomInt(29);
+          else arr[GUN] = getRandomInt(28);
+          break;
+        case 4: case 6: case 9: case 11:
+          arr[GUN] = getRandomInt(30);
+          break;
+        default:
+          arr[GUN] = getRandomInt(31);
+      }
+      tarix.push(arr);
+    }
+    
+    tarix.forEach((item) => printDate(item));
+    
+    tarix.sort((a,b) => {
+      if(a[IL] == b[IL]) {
+        
+        if(a[AY] == b[AY]) {
+          if(a[GUN] == b[GUN]) return 0;
+          
+          if(a[GUN] > b[GUN]) return 1;
+          if(a[GUN] < b[GUN]) return -1;
+        }
+        if(a[AY] > b[AY]) return 1;
+        if(a[AY] < b[AY]) return -1;
+        
+      }
+      if(a[IL] > b[IL]) return 1;
+      if(a[IL] < b[IL]) return -1;
+    });
+    
+    debug('');
+    printDates(tarix);
+    
+    debug('');
+    printDates(tarix,EDED,'/');
+    
+    debug('');
+    printDates(tarix,TAM);
+    
+    debug('');
+    printDates(tarix,QISA);
+    
+  </script>
+</body>
+</html>
