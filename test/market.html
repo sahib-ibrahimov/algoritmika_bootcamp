@@ -8,8 +8,7 @@
 <body>
   <script>
     
-    const [NAME, COST] = [0, 1];
-    let mehsullar = [];
+    let mehsullar = new Array();
     
     while(true) {
       let user = prompt('istifadeci adini daxil edin:');
@@ -20,8 +19,11 @@
           if(s == '') break;
           s = s.split(' ');
           if(s.length != 2) continue;
-          s[1] = parseFloat(s[1]);
-          mehsullar.push(s);
+          
+          let temp = new Object();
+          temp.name = s[0];
+          temp.cost = parseFloat(s[1]);
+          mehsullar.push(temp);
         }
       } else {
         
@@ -29,7 +31,7 @@
                       'Mehsullarimiz:\n' +
                       'kod\tadi\tqiymeti\n';
         for(let i=0; i<mehsullar.length; ++i)
-          menu += `${i}\t${mehsullar[i][NAME]}\t${mehsullar[i][COST]}\n`;
+          menu += `${i}\t${mehsullar[i].name}\t${ mehsullar[i].cost}\n`;
         print(menu);
         
         let summ = 0;
@@ -39,8 +41,8 @@
           mehsul = parseInt(mehsul);
           
           if (mehsul < mehsullar.length) {
-            print(`${mehsullar[mehsul][NAME]} sebete elave edildi`);
-            summ += mehsullar[mehsul][COST];
+            print(`${mehsullar[mehsul].name} sebete elave edildi`);
+            summ += mehsullar[mehsul].cost;
             print('Sebetde: ' + summ + ' manat', WARN);
           } else {
             print('Mehsul bazada tapilmadi!', ERROR);

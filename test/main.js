@@ -19,7 +19,7 @@ function print(obj, stat=LOG) {
   }
 }
 
-function debug(obj) { print(obj,WARN); }
+function debug(obj) { console.warn(obj); }
 
 function printMatris(arr, stat=LOG) {
   let s = [];

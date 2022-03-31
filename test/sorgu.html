@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript</title>
+  <link rel="stylesheet" href="main.css" />
+  <script src="main.js"></script>
+</head>
+<body>
+  <script>
+    
+    const sorgu = {
+      sual: 'Xidmetden raziliginizi bildirin:\n',
+      cavab: {
+        'pis': 0,
+        'kafi': 0,
+        'yaxsi': 0,
+        'ela': 0,
+        'super': 0
+      },
+      
+      setPoint(key) {
+        --key;
+        const x = Object.keys(this.cavab);
+        if((key < 0) || (key >= x.length)) return false;
+        ++this.cavab[ x[key] ];
+        return true;
+      },
+      
+      count() {
+        let summ = 0;
+        for(let key in this.cavab) summ += this.cavab[key];
+        return summ;
+      },
+      
+      getCavab() {
+        let s = '';
+        for(let key in this.cavab) s += key + '\n';
+        return s;
+      },
+      
+      statistika() {
+        print('Statistika:', WARN);
+        for(let key in sorgu.cavab)
+          print(key+':\t'+ (sorgu.cavab[key] / sorgu.count() * 100).toFixed(2) + '%');
+        print('sorguda istirak etdi: '+sorgu.count(),WARN);
+      }
+    }
+    
+    while(true) {
+      let s = prompt( sorgu.sual + sorgu.getCavab() );
+      if((s == '') || (s == null) || (s == 0)) break;
+      if(!sorgu.setPoint( parseInt(s) )) alert('duzgun secim edin!');
+    }
+    
+    sorgu.statistika();
+    
+  </script>
+</body>
+</html>

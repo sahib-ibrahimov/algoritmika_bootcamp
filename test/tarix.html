@@ -9,7 +9,6 @@
   <script>
     
     const [MIN_IL, CARI_IL] = [1990, 2022];
-    const [GUN, AY, IL] = [0, 1, 2];
     const [EDED, QISA, TAM] = [0, 1, 2];
     
     function leapYear(year) {
@@ -26,15 +25,15 @@
                       'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr'];
       switch(type) {
         case 0:
-          let g = (date[GUN] > 9) ? date[GUN] : '0'+date[GUN];
-          let a = (date[AY] > 9) ? date[AY] : '0'+date[AY];
-          print(`${g}${sep}${a}${sep}${date[IL]}`);
+          let g = (date.gun > 9) ? date.gun : '0'+date.gun;
+          let a = (date.ay > 9) ? date.ay : '0'+date.ay;
+          print(`${g}${sep}${a}${sep}${date.il}`);
           break;
         case 1:
-          print(`${date[GUN]} ${months[date[AY]].substr(0,3)} ${date[IL]}`);
+          print(`${date.gun} ${months[date.ay].substr(0,3)} ${date.il}`);
           break;
         case 2:
-          print(`${date[GUN]} ${months[date[AY]]} ${date[IL]}`);
+          print(`${date.gun} ${months[date.ay]} ${date.il}`);
           break;
       }
     }
@@ -45,19 +44,19 @@
     
     const tarix = new Array();
     for(let i=0; i<5; ++i) {
-      let arr = new Array();
-      arr[IL] = MIN_IL + getRandomInt(CARI_IL - MIN_IL - 1) + 1;
-      arr[AY] = getRandomInt(12);
-      switch(arr[AY]) {
+      let arr = new Object();
+      arr.il = MIN_IL + getRandomInt(CARI_IL - MIN_IL - 1) + 1;
+      arr.ay = getRandomInt(12);
+      switch(arr.ay) {
         case 2:
-          if(leapYear(arr[IL])) arr[GUN] = getRandomInt(29);
-          else arr[GUN] = getRandomInt(28);
+          if(leapYear(arr.il)) arr.gun = getRandomInt(29);
+          else arr.gun = getRandomInt(28);
           break;
         case 4: case 6: case 9: case 11:
-          arr[GUN] = getRandomInt(30);
+          arr.gun = getRandomInt(30);
           break;
         default:
-          arr[GUN] = getRandomInt(31);
+          arr.gun = getRandomInt(31);
       }
       tarix.push(arr);
     }
@@ -65,20 +64,20 @@
     tarix.forEach((item) => printDate(item));
     
     tarix.sort((a,b) => {
-      if(a[IL] == b[IL]) {
+      if(a.il == b.il) {
         
-        if(a[AY] == b[AY]) {
-          if(a[GUN] == b[GUN]) return 0;
+        if(a.ay == b.ay) {
+          if(a.gun == b.gun) return 0;
           
-          if(a[GUN] > b[GUN]) return 1;
-          if(a[GUN] < b[GUN]) return -1;
+          if(a.gun > b.gun) return 1;
+          if(a.gun < b.gun) return -1;
         }
-        if(a[AY] > b[AY]) return 1;
-        if(a[AY] < b[AY]) return -1;
+        if(a.ay > b.ay) return 1;
+        if(a.ay < b.ay) return -1;
         
       }
-      if(a[IL] > b[IL]) return 1;
-      if(a[IL] < b[IL]) return -1;
+      if(a.il > b.il) return 1;
+      if(a.il < b.il) return -1;
     });
     
     debug('');
