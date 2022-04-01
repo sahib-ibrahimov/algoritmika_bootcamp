@@ -44,6 +44,7 @@ function shuffle(arr) {
     arr[i] = arr[x];
     arr[x] = temp;
   }
+  return arr;
 }
 
 function isDigit(c) {

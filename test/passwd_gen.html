@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript</title>
+  <link rel="stylesheet" href="main.css" />
+  <script src="main.js"></script>
+</head>
+<body>
+  <script>
+    
+    const [LOWERS, UPPERS, NUMBERS, SYMBOLS] = ['l','u','n','s'];
+    
+    function passwdGen(len=8,flag=LOWERS) {
+      const lowers = "abcdefghijklmnopqrstuvqxyz";
+      const uppers = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const numbers = "0123456789";
+      const symbols = ".,!@#$%^&*()/\\";
+      
+      let t = '';
+      for(let i=0; i<flag.length; ++i) {
+        switch(flag.charAt(i)) {
+          case 'l': t += lowers; break;
+          case 'u': t += uppers; break;
+          case 'n': t += numbers; break;
+          case 's': t += symbols; break;
+        }
+      }
+      
+      t = shuffle(t.split('')).join('');
+      
+      let passwd = new Array();
+      for(let i=0; i<len; ++i)
+        passwd.push(t.charAt(getRandomInt(t.length)-1));
+      return passwd.join('');
+    }
+    
+    print(passwdGen(8,LOWERS+UPPERS+NUMBERS+SYMBOLS));
+    print(passwdGen(32,LOWERS));
+    print(passwdGen(32,UPPERS));
+    print(passwdGen(10,NUMBERS));
+    print(passwdGen(10,SYMBOLS));
+    print(passwdGen(16));
+    
+  </script>
+</body>
+</html>

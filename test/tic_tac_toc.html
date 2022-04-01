@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript</title>
+  <link rel="stylesheet" href="main.css" />
+  <script src="main.js"></script>
+</head>
+<body>
+  <script>
+    
+    const MAXSIZE = 3;
+    
+    const game = {
+      
+      current: true,  // X = true, O = false
+      board: new Array(MAXSIZE),
+      
+      start() {
+        for(let i=0; i<MAXSIZE; ++i) {
+          this.board[i] = new Array(MAXSIZE);
+          for(let j=0; j<MAXSIZE; ++j)
+            this.board[i][j] = ' ';
+        }
+      },
+      
+      setX(i,j) {
+        this.board[i][j] = 'X';
+      },
+      
+      setO(i,j) {
+        this.board[i][j] = 'O';
+      },
+      
+      input(i,j) {
+        --i; --j;
+        this.current ? this.setX(i,j) : this.setO(i,j);
+      },
+      
+      change() {
+        this.current = !this.current;
+      },
+      
+      getCurrent() {
+        return this.current ? 'X' : 'O';
+      },
+      
+      print() {
+        let s = new Array();
+        this.board.forEach((list) => {
+          s.push( list.join('|') );
+          s.push('------');
+        });
+        s.pop();
+        console.clear();
+        console.log(s.join('\n'));
+      },
+      
+      isHorizontal() {
+        return this.board.some((list) => {
+          for(let i=0; i<list.length-1; ++i) {
+            if( (list[i] == ' ') || (list[i] != list[i+1]) ) return false;
+          }
+          return true;
+        });
+      },
+      
+      isVertical() {
+        return false;
+      },
+      
+      isDiagonal() {
+        return false;
+      },
+      
+      status() {
+        return this.isVertical()
+            || this.isHorizontal() 
+            || this.isDiagonal();
+      },
+      
+      end() {
+        let s = this.current ? 'X' : 'O';
+        console.warn(s + ' is winner!');
+      }
+    }
+    
+    game.start();
+    game.print();
+    while(true) {
+      let s = prompt(game.getCurrent() + ' ucun gedisi daxil edin:');
+      if((s == '') || (s == null)) break;
+      s = s.split(' ');
+      if(s.length != 2) break;
+      game.input(s[0], s[1]);
+      game.print();
+      if(game.status()) {
+        game.end();
+        break;
+      }
+      game.change();
+    }
+    
+  </script>
+</body>
+</html>
