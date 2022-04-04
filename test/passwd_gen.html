@@ -8,38 +8,114 @@
 <body>
   <script>
     
-    const [LOWERS, UPPERS, NUMBERS, SYMBOLS] = ['l','u','n','s'];
+//    class PasswdGen {
+//      static lowers  = "abcdefghijklmnopqrstuvqxyz";
+//      static uppers  = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+//      static numbers = "0123456789";
+//      static symbols = ".,!@#$%^&*()/\\";
+//      
+//      static Full    = 'nlus';
+//      static Numbers = 'n';
+//      static Lowers  = 'l';
+//      static Uppers  = 'u';
+//      static Symbols = 's';
+//      
+//      static generate(len, flag) {
+//        let t = '';
+//        for(let i=0; i<flag.length; ++i) {
+//          switch(flag.charAt(i)) {
+//            case 'l': t += PasswdGen.lowers; break;
+//            case 'u': t += PasswdGen.uppers; break;
+//            case 'n': t += PasswdGen.numbers; break;
+//            case 's': t += PasswdGen.symbols; break;
+//          }
+//        }
+//
+//        t = shuffle(t.split('')).join('');
+//
+//        let passwd = new Array();
+//        for(let i=0; i<len; ++i)
+//          passwd.push(t.charAt(getRandomInt(t.length)-1));
+//        return passwd.join('');
+//      }
+//      
+//    }
+//    
+//    print( PasswdGen.generate(32, PasswdGen.Full) );
     
-    function passwdGen(len=8,flag=LOWERS) {
-      const lowers = "abcdefghijklmnopqrstuvqxyz";
-      const uppers = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      const numbers = "0123456789";
-      const symbols = ".,!@#$%^&*()/\\";
+    class PasswdGen {
+      static lowers  = "abcdefghijklmnopqrstuvqxyz";
+      static uppers  = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      static numbers = "0123456789";
+      static symbols = ".,!@#$%^&*()/\\";
       
-      let t = '';
-      for(let i=0; i<flag.length; ++i) {
-        switch(flag.charAt(i)) {
-          case 'l': t += lowers; break;
-          case 'u': t += uppers; break;
-          case 'n': t += numbers; break;
-          case 's': t += symbols; break;
-        }
+      constructor(len=8) {
+        this.len = len;
+        this.allow = '';
       }
       
-      t = shuffle(t.split('')).join('');
+      allowNumbers() {
+        this.allow += 'n';
+      }
       
-      let passwd = new Array();
-      for(let i=0; i<len; ++i)
-        passwd.push(t.charAt(getRandomInt(t.length)-1));
-      return passwd.join('');
+      allowLowers() {
+        this.allow += 'l';
+      }
+      
+      allowUppers() {
+        this.allow += 'u';
+      }
+      
+      allowSymbols() {
+        this.allow += 's';
+      }
+      
+      setUserList(str) {
+        this.userlist = str;
+      }
+      
+      generate() {
+        let t = '';
+        
+        if(this.userlist != undefined)
+          t = this.userlist;
+        else {
+          for(let i=0; i<this.allow.length; ++i) {
+            switch(this.allow.charAt(i)) {
+              case 'l': t += PasswdGen.lowers;  break;
+              case 'u': t += PasswdGen.uppers;  break;
+              case 'n': t += PasswdGen.numbers; break;
+              case 's': t += PasswdGen.symbols; break;
+            }
+          }
+        }
+        t = shuffle(t.split('')).join('');
+        
+        let passwd = new Array();
+        for(let i=0; i<this.len; ++i)
+          passwd.push(t.charAt(getRandomInt(t.length)-1));
+        return passwd.join('');
+      }
+      
     }
     
-    print(passwdGen(8,LOWERS+UPPERS+NUMBERS+SYMBOLS));
-    print(passwdGen(32,LOWERS));
-    print(passwdGen(32,UPPERS));
-    print(passwdGen(10,NUMBERS));
-    print(passwdGen(10,SYMBOLS));
-    print(passwdGen(16));
+    const get32alnum = new PasswdGen(32);
+    get32alnum.allowNumbers();
+    get32alnum.allowLowers();
+    
+    const get16upsym = new PasswdGen(16);
+    get16upsym.allowUppers();
+    get16upsym.allowSymbols();
+    
+    const genUser = new PasswdGen(8);
+    genUser.setUserList('ab');
+    
+    print( get32alnum.generate() );
+    print( get32alnum.generate() );
+    print( get16upsym.generate() );
+    print( get16upsym.generate() );
+    print( genUser.generate() );
+    print( genUser.generate() );
     
   </script>
 </body>
