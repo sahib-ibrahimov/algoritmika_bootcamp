@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript</title>
+  <link rel="stylesheet" href="main.css" />
+  <script src="main.js"></script>
+</head>
+<body>
+  <script>
+    
+    class Player {
+      constructor(name, power=10) {
+        this.name = name;
+        this.power = power;
+        this.health = 100;
+      }
+      
+      isDied() {
+        return this.health == 0;
+      }
+      
+      hit(pow) {
+        this.health -= pow;
+        if(this.health < 0) this.health = 0;
+      }
+      
+      info() {
+        console.log(this.name+'\t'+this.health+'\t'+this.power);
+      }
+    }
+    
+    const Game = {
+      current: -1,
+      count: 0,
+      players: new Array(),
+      
+      start() {
+        console.log('start');
+      },
+      
+      end() {
+        console.warn('winner is',this.getWinnerName());
+        console.log('end');
+      },
+      
+      setPlayers(max=2) {
+        this.count = max;
+        for(let i=0; i<max; ++i) {
+          const temp = new Player('player'+(i+1), getRandomInt());
+          this.players.push(temp);
+        }
+      },
+      
+      getStatus() {
+        ++this.current;
+        if(this.current >= this.count) this.current = 0;
+        return this.current;
+      },
+      
+      isGoing() {
+        let g = 0;
+        this.players.forEach((player) => {
+          if(!player.isDied()) ++g;
+        });
+        return g >= 2;
+      },
+      
+      play(enemy) {
+        this.getStatus();
+        if(enemy == this.current) return;
+        this.players[enemy].hit( this.players[this.current].power );
+      },
+      
+      show() {
+        console.warn('name\thealth\tpower')
+        this.players.forEach((player) => player.info());
+        console.error(' ');
+      },
+      
+      getPlayerName(i) {
+        return this.players[this.current].name;
+      },
+      
+      getWinnerName(i) {
+        let h = 0, k = -1;
+        for(let i=0; i<this.count; ++i)
+          if(this.players[i].health > h) {
+            h = this.players[i].health;
+            k = i;
+          }
+        return (k<0) ? 'not found' : this.players[k].name;
+      }
+    }
+    
+    Game.start();
+    Game.setPlayers(2);
+    Game.show();
+    while(Game.isGoing()) {
+      //Game.play(parseInt(prompt(Game.getPlayerName())));
+      Game.play(getRandomInt(Game.count)-1);
+      Game.show();
+    }
+    Game.end();
+    
+  </script>
+</body>
+</html>
