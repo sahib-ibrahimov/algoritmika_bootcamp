@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript</title>
+  <link rel="stylesheet" href="main.css" />
+  <script src="main.js"></script>
+</head>
+<body>
+  <script>
+    
+    class Queue {
+      current = 0;
+      size = 10;
+      
+      constructor(size=10) {
+        this.list = new Array();
+        this.size = size;
+      }
+      
+      add(x) {
+        if(this.list.length < this.size)
+          this.list.push(x);
+        else throw new Error('novbe dolub');
+      }
+      
+      get() {
+        if(this.list.length < 1) throw new Error('novbe bosdur');
+        return this.list.shift();
+      }
+      
+      print() {
+        console.log(this.list.join('\n'));
+      }
+    }
+    
+    const x = new Queue(3);
+    try {
+      x.add(1);
+      x.add(2);
+      x.add(3);
+      x.add(4);
+      x.get();
+      x.get();
+      x.get();
+      //x.get();
+    } catch(xeta) {
+      console.error(xeta.message);
+    } finally {
+      //
+    }
+    
+    console.log('end');
+    
+  </script>
+</body>
+</html>

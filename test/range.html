@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript</title>
+  <link rel="stylesheet" href="main.css" />
+  <script src="main.js"></script>
+</head>
+<body>
+  <script>
+    
+    class Range {
+      #from = 0;
+      #to = 100;
+      #step = 1;
+      
+      constructor(from=0, to=100, step=1) {
+        this.#from = from;
+        this.#to = to;
+        this.#step = step;
+      }
+      
+      include(x) {
+        return ( (x >= this.#from) && (x <= this.#to) );
+      }
+      
+      eval(func) {
+        for(let i=this.#from; i<=this.#to; i+=this.#step) func(i);
+      }
+      
+      print() {
+        for(let i=this.#from; i<=this.#to; i+=this.#step)
+          console.log(i);
+      }
+    }
+    
+    function sqr(x) {
+      console.log(x**2);
+    }
+    
+    const x = new Range(11,20);
+    x.eval(sqr);
+    
+  </script>
+</body>
+</html>
