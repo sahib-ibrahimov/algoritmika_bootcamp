@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript</title>
+  <link rel="stylesheet" href="main.css" />
+  <script src="main.js"></script>
+</head>
+<body>
+  <script>
+    
+    class User {
+      constructor(id, name) {
+        this.id = id;
+        this.name = name;
+      }
+      rename(name) {
+        this.name = name;
+      }
+    }
+    
+    class UserList {
+      static currentId = 0;
+      constructor() {
+        this.users = new Array();
+      }
+      addUser(name) {
+        const user = new User(++UserList.currentId, name);
+        this.users.push(user);
+      }
+      removeUser(id) {
+        for(let i=0; i<this.users.length; ++i)
+          if(this.users[i].id == id) delete this.users[i];
+      }
+      renameUser(id, name) {
+        for(let i=0; i<this.users.length; ++i)
+          if(this.users[i].id == id) this.users[i].rename(name);
+      }
+      getAllUsersString() {
+        let s = new Array();
+        this.users.forEach((item) => s.push(item.id+'.'+item.name+';\n'));
+        return s.join('');
+      }
+    }
+    
+    class Application {
+      constructor() {
+        this.userList = new UserList();
+      }
+      init() {
+        while (true) {
+          let cmd = prompt('komandani daxil edin:');
+          if((cmd == '') || (cmd == null)) {
+            console.error('komanda daxil edilmedi');
+            return;
+          }
+          
+          cmd = cmd.split(' ');
+//          if(cmd.length < 2) {
+//            console.error('parametr sayi duzgun deyil');
+//            continue;
+//          }
+          
+          switch(cmd[0]) {
+            case 'create':
+              this.userList.addUser(cmd[1]);
+              break;
+            case 'rename':
+              this.userList.renameUser(cmd[1], cmd[2]);
+              break;
+            case 'remove':
+              this.userList.removeUser(cmd[1]);
+              break;
+            case 'print':
+              console.log(this.userList.getAllUsersString());
+              break;
+            case 'exit': case 'quit':
+              return;
+            default:
+              console.error('unknown command');
+          }
+        }
+      }
+    }
+    
+    const app = new Application();
+    app.init();
+    
+  </script>
+</body>
+</html>
