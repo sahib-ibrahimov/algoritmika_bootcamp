@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript</title>
+  <link rel="stylesheet" href="main.css" />
+  <script src="main.js"></script>
+  <script src="data.js"></script>
+</head>
+<body>
+  <script>
+    
+    class Table {
+      #body = false;
+      #rows = 0;
+      
+      constructor(parent) {
+        this.table = document.createElement('table');
+        this.table.style.borderCollapse = 'collapse';
+        this.table.style.fontFamily = 'Roboto';
+        parent.append(this.table);
+      }
+      
+      pushHeader(headers) {
+        const thead = document.createElement('thead');
+        thead.style.color = 'white';
+        thead.style.backgroundColor = 'blueviolet';
+        const tr = document.createElement('tr');
+        headers.forEach((header) => {
+          const th = document.createElement('th');
+          th.style.padding = '5px';
+          th.style.border = '1px solid gray';
+          th.innerText = header;
+          tr.append(th);
+        });
+        thead.append(tr);
+        this.table.append(thead);
+      }
+      
+      pushCells(obj) {
+        if(!this.#body) {
+          const tbody = document.createElement('tbody');
+          this.table.append(tbody);
+          this.#body = tbody;
+        }
+        const tr = document.createElement('tr');
+        for(let i in obj) {
+          const td = document.createElement('td');
+          td.innerText = obj[i];
+          const x = Object.keys(obj);
+          if(i == x[x.length-1])
+            if(parseFloat(obj[i]) > 0) td.style.color = 'green';
+            else td.style.color = 'red';
+          td.style.padding = '5px';
+          td.style.border = '1px solid gray';
+          tr.append(td);
+        }
+        if(++this.#rows % 2) tr.style.backgroundColor = 'lightgray';
+        this.#body.append(tr);
+      }
+    }
+    
+    document.head.innerHTML += '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">';
+    
+    const table = new Table(document.body);
+    table.pushHeader(Object.keys(data[0]));
+    data.forEach((curr) => table.pushCells(curr));
+    
+  </script>
+</body>
+</html>
