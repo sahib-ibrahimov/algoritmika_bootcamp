@@ -70,3 +70,36 @@ function isNumber(str) {
   }
   return Boolean(str.length);
 }
+
+/* ===== CLASSES ===== */
+
+class Element {
+  #elem = null;
+  
+  constructor(tag='div', parent=document.body) {
+    this.#elem = document.createElement(tag);
+    parent.append(this.#elem);
+  }
+  
+  append(node) {
+    this.#elem.append(node);
+  }
+   
+  set text(txt) {
+    this.#elem.innerText = txt;
+  }
+  
+  get text() {
+    return this.#elem.innerText;
+  }
+  
+  css(property,value) {
+    if(this.#elem.style[property] == undefined) throw new Error('css property error');
+      this.#elem.style[property] = value;
+  }
+  
+  attr(property,value) {
+    if(this.#elem[property] == undefined) throw new Error('attribut error');
+  this.#elem[property] = value;
+}
+}
