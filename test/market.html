@@ -12,7 +12,7 @@
     
     while(true) {
       let user = prompt('istifadeci adini daxil edin:');
-      if(user == 'exit') break;
+      if((user == 'exit') || (user == null)) break;
       if(user == 'admin') {
         while(true) {
           let s = prompt('mehsulun adini ve qiymetini daxil edin:');
@@ -28,16 +28,59 @@
       } else {
         
         let menu = 'Magazamiza xos gelmissiniz!\n' +
-                      'Mehsullarimiz:\n' +
-                      'kod\tadi\tqiymeti\n';
-        for(let i=0; i<mehsullar.length; ++i)
-          menu += `${i}\t${mehsullar[i].name}\t${ mehsullar[i].cost}\n`;
-        print(menu);
+                      'Mehsullarimiz:\n';
+        
+        let text = document.createElement('p');
+        text.innerText = menu;
+        document.body.append(text);
+        
+        let table = document.createElement('table');
+        let thead = document.createElement('thead');
+        let tbody = document.createElement('tbody');
+        
+        const headers = ['kod', 'adi', 'qiymeti'];
+        let tr = document.createElement('tr');
+        headers.forEach((header) => {
+          let th = document.createElement('th');
+          th.innerText = header;
+          th.style.border = '1px solid black';
+          th.style.padding = '2px';
+          tr.append(th);
+          thead.append(tr);
+        });
+        
+        mehsullar.forEach((mehsul,kod) => {
+          let td1 = document.createElement('td');
+          td1.innerText = kod;
+          td1.style.border = '1px solid black';
+          td1.style.padding = '2px';
+          
+          let td2 = document.createElement('td');
+          td2.innerText = mehsul.name;
+          td2.style.border = '1px solid black';
+          td2.style.padding = '2px';
+          
+          let td3 = document.createElement('td');
+          td3.innerText = mehsul.cost + 'manat';
+          td3.style.border = '1px solid black';
+          td3.style.padding = '2px';
+          
+          let tr = document.createElement('tr');
+          tr.append(td1);
+          tr.append(td2);
+          tr.append(td3);
+          tbody.append(tr);
+        });
+        
+        table.append(thead);
+        table.append(tbody);
+        table.style.borderCollapse = 'collapse';
+        document.body.append(table);
         
         let summ = 0;
         while(true) {
           let mehsul = prompt('Mehsulun kodunu daxil edin:');
-          if (mehsul === '') break;
+          if ((mehsul === '') || (mehsul == null)) break;
           mehsul = parseInt(mehsul);
           
           if (mehsul < mehsullar.length) {
