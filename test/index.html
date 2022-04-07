@@ -108,13 +108,14 @@ document.querySelectorAll('.button').forEach(button => {
     })
 })
 
+
+    /* ================================================= */
+
     function setPosition() {
       let x = Math.round((event.clientX-event.target.offsetLeft) / event.target.offsetWidth * 100);
       document.querySelector('.value').innerText = x+'%';
       event.target.style.background = `linear-gradient(90deg, #FFA310 ${x}%, transparent 0%)`;
     }
-
-    /* ================================================= */
 
     document.querySelector('.volume-bar').addEventListener('click', (event) => {
       setPosition();
