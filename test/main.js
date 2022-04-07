@@ -57,8 +57,8 @@ function isDigit(c) {
   }
 }
 
-function isFloat(n){ 
-  return Number(n) == n && Number(n) % 1 !== 0; 
+function isFloat(n){
+  return Number(n) == n && Number(n) % 1 !== 0;
 }
 
 function isNumber(str) {
@@ -75,31 +75,49 @@ function isNumber(str) {
 
 class Element {
   #elem = null;
-  
+  #visible = true;
+  #toggle = true;
+
   constructor(tag='div', parent=document.body) {
     this.#elem = document.createElement(tag);
     parent.append(this.#elem);
   }
-  
+
   append(node) {
     this.#elem.append(node);
   }
-   
+
   set text(txt) {
     this.#elem.innerText = txt;
   }
-  
+
   get text() {
     return this.#elem.innerText;
   }
-  
+
   css(property,value) {
     if(this.#elem.style[property] == undefined) throw new Error('css property error');
       this.#elem.style[property] = value;
   }
-  
+
   attr(property,value) {
     if(this.#elem[property] == undefined) throw new Error('attribut error');
-  this.#elem[property] = value;
-}
+    this.#elem[property] = value;
+  }
+
+  addEvent(event, func) {
+    this.#elem.addEventListener(event, func);
+  }
+
+  toggle() {
+    if(this.#visible) this.#elem.style.display = 'none';
+    else this.#elem.style.display = '';
+    return this.#visible = !this.#visible;
+  }
+
+  toggleFunc(func1, func2) {
+    if(this.#toggle) func1();
+    else func2();
+    return this.#toggle = !this.#toggle;
+  }
 }

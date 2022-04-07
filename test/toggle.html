@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript</title>
+  <link rel="stylesheet" href="main.css" />
+  <script src="main.js"></script>
+</head>
+<body>
+  <button>hide</button>
+  <script>
+
+    const list = new Element('ul');
+    for(let i=0; i<5; ++i) {
+      const item = new Element('li', list);
+      item.text = 'item '+(i+1);
+      item.addEvent('click', (event) => {
+        item.toggleFunc(() => item.css('color','green'),
+                        () => item.css('color','red'));
+      });
+    }
+
+    document.querySelector('button').addEventListener('click', (event) => event.target.innerText = list.toggle() ? 'hide' : 'show' );
+
+  </script>
+</body>
+</html>
