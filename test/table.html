@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Item list</title>
+    <link rel="stylesheet" href="index.css"/>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;600&display=swap');
+
+body {
+    font-family: Roboto, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+table.goods {
+    border-collapse: collapse;
+}
+
+table.goods tr {
+    border-bottom: 1px solid #ece6e6;
+}
+
+table.goods th {
+    background: #fffeea;
+    padding: 10px;
+    text-align: center;
+}
+
+table.goods  th:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+table.goods  td {
+    padding: 8px 40px;
+}
+
+table.goods  tr > td:last-child, table.goods  tr > td:nth-child(3) {
+    text-align: center;
+}
+    </style>
+</head>
+<body>
+    <table class="goods">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price, $</th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Apple AirPods</td>
+            <td>169.00</td>
+            <td>57</td>
+        </tr>
+        <tr>
+            <td>Sony WH1000XM3</td>
+            <td>278.00</td>
+            <td>24</td>
+        </tr>
+        <tr>
+            <td>Sony WF-1000XM3</td>
+            <td>228.00</td>
+            <td>11</td>
+        </tr>
+        <tr>
+            <td>Samsung Galaxy Buds</td>
+            <td>140</td>
+            <td>22</td>
+        </tr>
+        <tr>
+            <td>Sennheiser HD 450BT</td>
+            <td>199.95</td>
+            <td>30</td>
+        </tr>
+        <tr>
+            <td>JBL Reflect Flow</td>
+            <td>149.95</td>
+            <td>8</td>
+        </tr>
+        <tr>
+            <td>Sony WH-XB900N</td>
+            <td>189.95</td>
+            <td>30</td>
+        </tr>
+        <tr>
+            <td>Apple AirPods Pro</td>
+            <td>249</td>
+            <td>15</td>
+        </tr>
+        <tr>
+            <td>Beats Solo Pro</td>
+            <td>269.95</td>
+            <td>15</td>
+        </tr>
+    </tbody>
+    </table>
+    <script>
+      class Table {
+        #body = false;
+        #rows = 0;
+
+        constructor(table) {
+          this.table = table;
+        }
+
+        pushCells(obj) {
+          if(!this.#body) {
+            const tbody = document.createElement('tbody');
+            this.table.append(tbody);
+            this.#body = tbody;
+          }
+          const tr = document.createElement('tr');
+          for(let i in obj) {
+            const td = document.createElement('td');
+            td.innerText = obj[i];
+            const x = Object.keys(obj);
+            tr.append(td);
+          }
+          this.#body.append(tr);
+        }
+      }
+
+      const data = new Array();
+      const rows = document.querySelector('tbody').children;
+      for(let i=0; i<rows.length; ++i) {
+        const row = rows[i].children;
+        const cells = new Array();
+        for(let j=0; j<row.length; ++j) {
+          cells.push(row[j].innerText);
+        }
+        data.push(cells);
+      }
+
+      function sortData(i, ord) {
+        data.sort((a,b) => {
+          if(isNaN( Number(a[i]) )) {
+            if(a[i] > b[i]) return 1;
+            if(a[i] == b[i]) return 0;
+            if(a[i] < b[i]) return -1;
+          } else return a[i] - b[i];
+        });
+        if(ord) data.reverse();
+      }
+
+      function clearTable() {
+        document.querySelector('tbody').remove();
+      }
+
+      function fillTable(data) {
+        const table = new Table(document.querySelector('table'));
+        data.forEach((curr) => table.pushCells(curr));
+      }
+
+      const toggle = new Array();
+      const headers = document.querySelector('thead').firstElementChild.children;
+      for(let i=0; i<headers.length; ++i) {
+        toggle.push(false);
+        headers[i].addEventListener('click', (event) => {
+          with(event.target) {
+            if(toggle[i])
+              if(innerText.indexOf('˄') > 0)
+                innerText = innerText.replace('˄', '˅');
+              else innerText = innerText + ' ˅';
+            else
+              if(innerText.indexOf('˅') > 0)
+                innerText = innerText.replace('˅', '˄');
+              else innerText = innerText + ' ˄';
+          }
+          toggle[i] = !toggle[i];
+          clearTable();
+          sortData(i, toggle[i]);
+          fillTable(data);
+        });
+      }
+
+
+    </script>
+</body>
+</html>
