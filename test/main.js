@@ -120,4 +120,16 @@ class Element {
     else func2();
     return this.#toggle = !this.#toggle;
   }
+
+  addClass(className) {
+    this.#elem.classList.add(className);
+  }
+
+  removeClass(className) {
+    this.#elem.classList.remove(className);
+  }
+
+  self() {
+    return this.#elem;
+  }
 }
