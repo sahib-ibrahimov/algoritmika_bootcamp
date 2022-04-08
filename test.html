@@ -1,10 +1,94 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html>
   <head>
     <meta charset="utf-8">
     <title>test</title>
+    <style>
+      canvas {
+        border: 2px solid black;
+        border-radius: 2px;
+      }
+    </style>
   </head>
   <body>
-    <h1>test</h1>
+    <canvas id="can" width="400" height="300"></canvas>
+    <script>
+      class Tank {
+        #x = 0;
+        #y = 0;
+        #w = 20;
+        #h = 20;
+        #s = 5;
+        
+        constructor(canvas) {
+          this.width = canvas.width;
+          this.height = canvas.height;
+          this.canvas = canvas.getContext('2d');
+        }
+        
+        draw() {
+          const x = this.canvas;
+          //x.beginPath();
+          x.clearRect(0,0,this.width,this.height);
+          x.fillRect(this.#x,this.#y,this.#w,this.#h);
+          //x.closePath();
+        }
+        
+        goLeft() {
+          this.#x -= this.#s;
+          if(this.#x < 0) this.#x = 0;
+        }
+        
+        goUp() {
+          this.#y -= this.#s;
+          if(this.#y < 0) this.#y = 0;
+        }
+        
+        goRight() {
+          this.#x += this.#s;
+          if(this.#x > this.width-this.#w) this.#x = this.width-this.#w;
+        }
+        
+        doDown() {
+          this.#y += this.#s;
+          if(this.#y > this.height-this.#h) this.#y = this.height-this.#h;
+        }
+      }
+      
+      const x = new Tank(document.getElementById('can'));
+      x.draw();
+      
+      let goLeft = false;
+      let goUp = false;
+      let goRight = false;
+      let goDown = false;
+      
+      document.addEventListener('keydown',(event) => {
+        switch(event.keyCode) {
+          case 37: goLeft = true;   break;
+          case 38: goUp = true;     break;
+          case 39: goRight = true;  break;
+          case 40: goDown = true;   break;
+        }
+      });
+            
+      document.addEventListener('keyup',(event) => {
+        switch(event.keyCode) {
+          case 37: goLeft = false;  break;
+          case 38: goUp = false;    break;
+          case 39: goRight = false; break;
+          case 40: goDown = false;  break;
+        }
+      });
+      
+      setInterval(() => {
+          if(goLeft) x.goLeft();
+          if(goUp) x.goUp();
+          if(goRight) x.goRight();
+          if(goDown) x.doDown();
+          x.draw();
+      }, 33);
+      
+    </script>
   </body>
 </html>

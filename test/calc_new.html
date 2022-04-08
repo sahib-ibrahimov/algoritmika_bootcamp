@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript</title>
+  <link rel="stylesheet" href="main.css" />
+  <script src="main.js"></script>
+  <style>
+    input {
+      margin: 2px;
+      text-align: right;
+    }
+    button {
+      width: 24px;
+      height: 24px;
+      margin: 2px;
+    }
+  </style>
+</head>
+<body>
+  <input type="number" id="num" value="0" step="0.1" size="15" autofocus /><br/>
+  <button id="add">+</button>
+  <button id="sub">-</button>
+  <button id="mul">*</button>
+  <button id="div">/</button>
+  <button id="calc">=</button>
+  
+  <script>
+    let result = 0;
+    
+    function calc(event) {
+      const num = document.getElementById('num');
+      const x = parseFloat(num.value);
+      switch(event.target.id) {
+        case 'add': result += x; break;
+        case 'sub': result -= x; break;
+        case 'mul': result *= x; break;
+        case 'div': result /= x; break;
+        case 'calc': num.value = result; return;
+      }
+      num.value = 0;
+      num.focus();
+    }
+    
+    const btns = document.querySelectorAll('button');
+    btns.forEach((btn) => {
+      btn.addEventListener('click', calc);
+    });
+  </script>
+</body>
+</html>
