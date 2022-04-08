@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript</title>
+  <link rel="stylesheet" href="main.css" />
+  <script src="main.js"></script>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    #canvas {
+      border: 2px solid #000;
+      border-radius: 2px;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" width="400" height="300"></canvas>
+  <script>
+    
+    class Tank {
+      x = 0;
+      y = 0;
+      kadr = 1;
+      width = 50;
+      height = 50;
+      step = 10;
+      
+      constructor(canvas) {
+        this.canvas = canvas.getContext('2d');
+        this.canvasWidth = canvas.width;
+        this.canvasHeight = canvas.height;
+        this.image = new Image();
+        this.image.src = `../img/tank2-${this.kadr}.png`;
+        this.image.width = this.width;
+        this.image.height = this.height;
+      }
+      
+      setXY(x,y) {
+        this.x = x;
+        this.y = y;
+      }
+      
+      draw() {
+        this.canvas.drawImage(this.image, this.x, this.y);
+        this.nextKadr();
+      }
+      
+      goLeft() {
+        this.image.src = `../img/tank1-${this.kadr}.png`;
+        this.x -= this.step;
+        if(this.x < 0) this.x = 0;
+      }
+      
+      goRight() {
+        this.image.src = `../img/tank3-${this.kadr}.png`;
+        this.x += this.step;
+        if(this.x > this.canvasWidth - this.width ) this.x = this.canvasWidth - this.width;
+      }
+      
+      goUp() {
+        this.image.src = `../img/tank2-${this.kadr}.png`;
+        this.y -= this.step;
+        if(this.y < 0) this.y = 0;
+      }
+      
+      goDown() {
+        this.image.src = `../img/tank4-${this.kadr}.png`;
+        this.y += this.step;
+        if(this.y > this.canvasHeight - this.height ) this.y = this.canvasHeight - this.height;
+      }
+      
+      nextKadr() {
+        if(this.kadr < 2) ++this.kadr;
+        else this.kadr = 1;
+      }
+    }
+    
+    const keys = {
+      left: false,
+      up: false,
+      right: false,
+      down: false
+    }
+    
+    document.body.addEventListener('keydown', (event)=>{
+      switch(event.keyCode) {
+        case 37: if(!keys.right) keys.left = true;  break;
+        case 38: if(!keys.down) keys.up = true;    break;
+        case 39: if(!keys.left) keys.right = true; break;
+        case 40: if(!keys.up) keys.down = true;  break;
+      }
+    });
+    
+    document.body.addEventListener('keyup', (event)=>{
+      switch(event.keyCode) {
+        case 37: keys.left = false;   break;
+        case 38: keys.up = false;     break;
+        case 39: keys.right = false;  break;
+        case 40: keys.down = false;   break;
+      }
+    });
+    
+    const canvas = document.getElementById('canvas');
+    const tank1 = new Tank(canvas);
+    const tank2 = new Tank(canvas);
+    tank2.setXY(Math.round(canvas.width/2),0);
+    
+    setInterval(() => {
+      if(keys.left) tank1.goLeft();
+      if(keys.up) tank1.goUp();
+      if(keys.right) tank1.goRight();
+      if(keys.down) tank1.goDown();
+      
+      if(keys.left) tank2.goLeft();
+      if(keys.up) tank2.goUp();
+      if(keys.right) tank2.goRight();
+      if(keys.down) tank2.goDown();
+      
+      canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);
+      tank1.draw();
+      tank2.draw();
+    }, 33);
+    
+  </script>
+</body>
+</html>
