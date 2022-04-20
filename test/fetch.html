@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript</title>
+  <link rel="stylesheet" href="main.css" />
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #000;
+      padding: 2px 5px;
+    }
+    div {
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <input id="from" placeholder="from" />
+    <input id="to" placeholder="to" />
+    <button onclick="xsearch();">Search</button>
+  </div>
+  <div>
+    <input id="new-from" placeholder="from" />
+    <input id="new-to" placeholder="to" />
+    <input id="new-amount" placeholder="amount" type="number" />
+    <button onclick="xnew();">New</button>
+  </div>
+  <div>
+    <input id="edit-id" placeholder="id" disabled />
+    <input id="edit-from" placeholder="from" />
+    <input id="edit-to" placeholder="to" />
+    <input id="edit-amount" placeholder="amount" type="number" />
+    <button onclick="xedit();">Save</button>
+  </div>
+  <div>
+    <button onclick="xreload();">Reload</button>
+    <button onclick="xclear();">Clear</button>
+  </div>
+  <script>
+
+    class Table {
+      #head = null;
+      #body = null;
+      #parent = null;
+
+      constructor(parent) {
+        this.self = document.createElement('table');
+        parent.append(this.self);
+      }
+
+      createHeader(data) {
+        if(!this.#head) {
+          this.#head = document.createElement('thead');
+          const tr = document.createElement('tr');
+          const keys = Object.keys(data);
+          for(let x=0; x<keys.length; ++x) {
+            const th = document.createElement('th');
+            const y = x == 0 ? 3 : x-1;
+            th.innerText = keys[y];
+            tr.append(th);
+          }
+
+          let th = document.createElement('th');
+          th.innerText = 'Delete';
+          tr.append(th);
+
+          th = document.createElement('th');
+          th.innerText = 'Edit';
+          tr.append(th);
+
+          this.#head.append(tr);
+          this.self.prepend(this.#head);
+        }
+      }
+
+      createRows(data) {
+        if(!this.#body) {
+          this.#body = document.createElement('tbody');
+          data.forEach((item, i) => {
+            const tr = document.createElement('tr');
+            const keys = Object.keys(item);
+            for(let x=0; x<keys.length; ++x) {
+              const td = document.createElement('td');
+              const y = x == 0 ? 3 : x-1;
+              td.innerText = item[keys[y]];
+              tr.append(td);
+            }
+
+            let td = document.createElement('td');
+            let btn = document.createElement('button');
+            btn.innerText = 'Delete';
+            btn.addEventListener('click', removeData);
+            td.append(btn);
+            tr.append(td);
+
+            td = document.createElement('td');
+            btn = document.createElement('button');
+            btn.innerText = 'Edit';
+            btn.addEventListener('click', editData);
+            td.append(btn);
+            tr.append(td);
+
+            this.#body.append(tr);
+          });
+          this.self.append(this.#body);
+        }
+      }
+
+      clear() {
+        if(this.#body) {
+          this.#body.remove();
+          this.#body = null;
+        }
+      }
+    }
+
+    const URL = 'https://acb-api.algoritmika.org/api/transaction';
+
+    table = new Table(document.body);
+    xreload();
+
+    async function getData(url, obj=null) {
+      if(!url) throw 'url error';
+      const response = obj ? await fetch(url,obj) : await fetch(url);
+      const data = await response.json();
+      return data;
+    }
+
+    function xreload() {
+      getData(URL).then(data => {
+        table.createHeader(data[0]);
+        table.clear();
+        table.createRows(data);
+      }).catch(err => console.error(err));
+    }
+
+    function xclear() {
+      table.clear();
+    }
+
+    function xsearch() {
+      const from = encodeURIComponent(document.querySelector('#from').value);
+      const to = encodeURIComponent(document.querySelector('#to').value);
+      const GetURL = URL + `?from=${from}&to=${to}`;
+      getData(GetURL).then(data => {
+        table.clear();
+        table.createRows(data);
+      }).catch(err => console.error(err));
+    }
+
+    function xnew() {
+      const from = encodeURIComponent(document.querySelector('#new-from').value);
+      const to = encodeURIComponent(document.querySelector('#new-to').value);
+      const amount = encodeURIComponent(document.querySelector('#new-amount').value);
+      const post = {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          'from': from,
+          'to': to,
+          'amount': amount
+        })
+      };
+      getData(URL, post).then(data => {
+        alert('new transaction added!\ntrasaction-id: '+data.id);
+        xreload();
+      }).catch(err => console.error(err));
+    }
+
+    function removeData(event) {
+      const btn = event.target;
+      const row = btn.parentElement.parentElement;
+      const id = row.firstElementChild.innerText;
+      const DelURL = URL + `/${id}`;
+      const del = { method: 'DELETE' };
+      getData(DelURL, del).then(data => {
+        alert('transaction removed!\ntrasaction-id: '+id);
+        table.clear();
+        table.createRows(data);
+      }).catch(err => console.error(err));
+    }
+
+    function editData(event) {
+      const id = document.querySelector('#edit-id');
+      const from = document.querySelector('#edit-from');
+      const to = document.querySelector('#edit-to');
+      const amount = document.querySelector('#edit-amount');
+
+      const btn = event.target;
+      const row = btn.parentElement.parentElement;
+      id.value = row.children[0].innerText;
+      from.value = row.children[1].innerText;
+      to.value = row.children[2].innerText;
+      amount.value = row.children[3].innerText;
+      from.focus();
+    }
+
+    function xedit() {
+      const id = encodeURIComponent(document.querySelector('#edit-id').value);
+      const from = encodeURIComponent(document.querySelector('#edit-from').value);
+      const to = encodeURIComponent(document.querySelector('#edit-to').value);
+      const amount = encodeURIComponent(document.querySelector('#edit-amount').value);
+      const edit = {
+        method: 'PUT',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          'from': from,
+          'to': to,
+          'amount': amount
+        })
+      };
+      const EditURL = URL + `/${id}`;
+      getData(EditURL, edit).then(data => {
+        alert('transaction changed!\ntrasaction-id: '+data.id);
+        xreload();
+      }).catch(err => console.error(err));
+    }
+
+  </script>
+</body>
+</html>

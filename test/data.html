@@ -12,14 +12,14 @@
     class Table {
       #body = false;
       #rows = 0;
-      
+
       constructor(parent) {
         this.table = document.createElement('table');
         this.table.style.borderCollapse = 'collapse';
         this.table.style.fontFamily = 'Roboto';
         parent.append(this.table);
       }
-      
+
       pushHeader(headers) {
         const thead = document.createElement('thead');
         thead.style.color = 'white';
@@ -35,7 +35,7 @@
         thead.append(tr);
         this.table.append(thead);
       }
-      
+
       pushCells(obj) {
         if(!this.#body) {
           const tbody = document.createElement('tbody');
@@ -57,18 +57,18 @@
         if(++this.#rows % 2) tr.style.backgroundColor = 'lightgray';
         this.#body.append(tr);
       }
-      
+
       rowCount() {
         return this.#rows;
       }
     }
-    
+
     document.head.innerHTML += '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">';
-    
+
     const table = new Table(document.body);
     table.pushHeader(Object.keys(data[0]));
     data.forEach((curr) => table.pushCells(curr));
-    
+
   </script>
 </body>
 </html>

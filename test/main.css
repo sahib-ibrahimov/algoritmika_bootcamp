@@ -3,35 +3,3 @@
   margin: 0;
   box-sizing: border-box;
 }
-
-.flex-div {
-  width: 500px;
-  height: 500px;
-  margin: 0 auto;
-  border: 2px solid green;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-.block-div {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid navy;
-}
-
-.box-div {
-  height: 50px;
-  width: 100px;
-  margin: 10px;
-  background-color: red;
-  border-radius: 10px;
-  color: white;
-  text-align: center;
-  line-height: 50px;
-  vertical-align: middle;
-}
