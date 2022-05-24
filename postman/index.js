@@ -18,14 +18,26 @@ app.listen(3000, ()=>{
 });
 
 app.get('/', (req, res) => {
+  res.status(200).send('userlist');
+});
+
+app.get('/users', (req, res) => {
   res.json(users);
 });
 
-app.post('/', (req, res) => {
+app.post('/users/add', (req, res) => {
   users.push(req.body);
   fs.writeFile('users.json', JSON.stringify(users), (e) => {
     if(!e) console.log('users saved');
     else console.error(e);
   });
   res.json(users);
+});
+
+app.get('/phonebook', (req, res) => {
+  const ans = new Array();
+  ans.push('<ol>');
+  users.forEach(user => ans.push(`<li>${user.name}: ${user.phone}</li>`));
+  ans.push('</ol>');
+  res.send(ans.join(''));
 });
