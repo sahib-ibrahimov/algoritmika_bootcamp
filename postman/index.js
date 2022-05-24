@@ -25,6 +25,16 @@ app.get('/users', (req, res) => {
   res.json(users);
 });
 
+app.get('/user/:name', (req, res) => {
+  res.send(
+    users.filter(user =>
+      req.params.name.toLowerCase() === user.name.toLowerCase()
+    ).map(user =>
+      `<p>${user.surname} ${user.name}, ${user.age} | ${user.phone}</p>`
+    ).join('')
+  );
+});
+
 app.post('/users/add', (req, res) => {
   users.push(req.body);
   fs.writeFile('users.json', JSON.stringify(users), (e) => {
