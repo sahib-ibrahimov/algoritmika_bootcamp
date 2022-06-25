@@ -4,10 +4,14 @@ git remote -v                 # git ile elaqeni yoxlamaq
 
 git status                    # lokalda deyisirliklere nezaret
 git add .                     # lokalda deyisirlikleri repozitoriye elave etmek
-git commit -m "deyisirlik"    # deyisiklikleri yadda saxlamaq
+git commit -m "deyisiklik"    # deyisiklikleri yadda saxlamaq
 git push                      # git repozitoriya elave etmek
 
 git init                      # git-e qosulmani berpa etmek
 git pull                      # git repozitoriyinden son versiyani yuklemek
+
+git branch <new branch>       # yeni budaq yaratmaq
+git checkout <branch>         # budaga kecid almaq
+git branch -d <branch>        # budagi legv etmek
 
 test branch
