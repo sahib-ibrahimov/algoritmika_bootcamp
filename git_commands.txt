@@ -10,11 +10,14 @@ git push                      # git repozitoriya elave etmek
 git init                      # git-e qosulmani berpa etmek
 git pull                      # git repozitoriyinden son versiyani yuklemek
 
+git remote add origin <repository link>      # remote repozitoriyi lokala calasdirmaq
+git remote set-url origin <repository link>  # remote repozitoriyi deyismek
+
 git branch <new branch>       # yeni budaq yaratmaq
 git checkout <branch>         # budaga kecid almaq
 git branch -d <branch>        # budagi legv etmek
 git push origin <branch>      # yenilikleri budaga yuklemek
 
-git push --delete origin <branch>   # remote budagi legv etmek
+git push --delete origin <branch>             # remote budagi legv etmek
 
 test branch
