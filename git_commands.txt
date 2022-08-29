@@ -15,4 +15,6 @@ git checkout <branch>         # budaga kecid almaq
 git branch -d <branch>        # budagi legv etmek
 git push origin <branch>      # yenilikleri budaga yuklemek
 
+git push --delete origin <branch>   # remote budagi legv etmek
+
 test branch
